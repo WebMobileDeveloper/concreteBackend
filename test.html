@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Timed Reminder</title>
+    <style>
+        body {
+            background-color: #d8dad9;
+        }
+
+        .container {
+            background-color: white;
+            width: 80%;
+            margin: 0px auto;
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        ul,
+        li {
+            list-style-type: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .section-content>li {
+            line-height: 30px;
+        }
+
+        .sub-title {
+            display: inline-block;
+            background-color: "#eeeecc";
+            width: 200px;
+            color: rgb(25, 25, 112);
+        }
+
+        .right-align {
+            width: 150px;
+            padding-left: 100px;
+        }
+
+        .hr {
+            height: 1px;
+            border-bottom: solid 1px #d5d5d5;
+            width: 80%;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="header">New Order Request</h1>
+        <div>Hi, Chris. You receiced new order request!</div>
+        <h3 style="text-align: center">${item.title}</h3>
+
+        <ul>
+            <li class="section">
+                <span class="section-title">- Order Information</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">Order Title</span><span class="sub-value">${item.title}</span></li>
+                    <li><span class="sub-title">Order Id</span><span class="sub-value">${snapshot.key}</span></li>
+                    <li><span class="sub-title">Current Status</span><span class="sub-value" style="color:crimson">${item.status}</span></li>
+                    <li><span class="sub-title">Order Time</span><span class="sub-value">${MomentFunc.toDate(item.requestTime)}</span></li>
+                    <li><span class="sub-title">Last Updated</span><span class="sub-value">${MomentFunc.fromNow(item.lastUpdateTime)}</span></li>
+                </ul>
+            </li>
+
+            <li class="section">
+                <span class="section-title">- Account history for this request</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">${item.history[0].action}</span><span class="sub-value">${MomentFunc.toDate(item.history[0].time)}</span></li>
+                    <li><span class="sub-title right-align">*234234234</span><span class="sub-value">{$item.history[0].more}</span></li>
+                </ul>
+            </li>
+
+            <div class="hr"></div>
+
+            <li class="section">
+                <span class="section-title">- Delivery Details</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">Delivery Date</span><span class="sub-value">${item.delivery_date}</span></li>
+                    <li><span class="sub-title">Delivery Time</span><span class="sub-value">${item.delivery_time}</span></li>
+                    <li><span class="sub-title">Delivery Address</span><span class="sub-value">${item.delivery_address}</span></li>
+                    <li><span class="sub-title">Delivery Suburb</span><span class="sub-value">${item.delivery_suburb}</span></li>
+                </ul>
+            </li>
+            <div class="hr"></div>
+
+            <li class="section">
+                <span class="section-title">- Customer Details</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">Company Name</span><span class="sub-value">${item.company_name}</span></li>
+                    <li><span class="sub-title">Customer Name</span><span class="sub-value">${item.customer_name}</span></li>
+                    <li><span class="sub-title">Phone Number</span><span class="sub-value">${item.phone}</span></li>
+                    <li><span class="sub-title">E-mail Address</span><span class="sub-value">${item.email}</span></li>
+                </ul>
+            </li>
+            <div class="hr"></div>
+
+            <li class="section">
+                <span class="section-title">- Pump Options</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">Pump Required</span><span class="sub-value">${item.pumpRequired ? 'Yes' : 'No'}</span></li>
+                    {item.pumpRequired && <li><span class="sub-title">Quantity (m3)</span><span class="sub-value">${item.quantity}</span></li>}
+                    {item.pumpRequired && <li><span class="sub-title">Job Type</span><span class="sub-value">${item.job_type}</span></li>}
+                </ul>
+            </li>
+            <div class="hr"></div>
+
+            <li class="section">
+                <span class="section-title">- Concrete Details</span>
+                <ul class="section-content">
+                    <li><span class="sub-title">MPA - Strength</span><span class="sub-value">${item.mpa_strength}</span></li>
+                    <li><span class="sub-title">Stone Size - Milis</span><span class="sub-value">${item.stone_size}</span></li>
+                    <li><span class="sub-title">Slump - Wetness</span><span class="sub-value">${item.slump_wetness}</span></li>
+                </ul>
+            </li>
+            <div class="hr"></div>
+
+            <li class="section">
+                <span class="section-title">- Other Options</span>
+                <ul class="section-content">
+                    {item.note && <li><span class="sub-title">Note</span><span class="sub-value">${item.note}</span></li>}
+                </ul>
+            </li>
+            <div class="hr"></div>
+        </ul>
+    </div>
+    <div><p>You can check more details and update order state on mobile apps.</p></div>
+    
+</body>
+
+</html>
